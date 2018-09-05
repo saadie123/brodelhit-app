@@ -8,6 +8,29 @@ router.get("/register-complete", (req, res) => {
   res.render("register-complete");
 });
 
+router.get("/signin-success", (req, res) => {
+  res.json({ success: true });
+});
+
+router.get("/signin-fail", (req, res) => {
+  let error = req.flash("error");
+  res.status(400).json({ error });
+});
+
+router.get("/logout", (req, res) => {
+  req.logout();
+  res.redirect("/");
+});
+
+router.post(
+  "/signin",
+  passport.authenticate("local", {
+    successRedirect: "/signin-success",
+    failureRedirect: "/signin-fail",
+    failureFlash: "Username or password is incorrect"
+  })
+);
+
 router.post("/signup", async (req, res) => {
   try {
     let { errors, isValid } = registerValidator(req.body);

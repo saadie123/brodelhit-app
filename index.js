@@ -4,6 +4,7 @@ const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const passport = require("passport");
+const flash = require("express-flash");
 const mongoose = require("mongoose");
 const config = require("./config/config");
 const passportConfig = require("./config/passport");
@@ -22,6 +23,7 @@ server.set("view engine", "handlebars");
 server.use(express.static(path.resolve(__dirname, "public")));
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
+server.use(flash());
 server.use(
   session({
     resave: true,

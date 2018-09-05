@@ -32,14 +32,17 @@
 
                     <div class="tab-content">
                         <div id="signin" class="tab-pane fade in active">
-                            <form action="/">
+                            <div class="alert alert-danger" role="alert">
+                                <ul id="signin-errors"></ul>
+                            </div>
+                            <form action="" id="signin-form">
                                 <div class="form-group">
-                                    <label for="email">Usuario o correo eletronico</label>
-                                    <input type="text" class="form-control" id="user">
+                                    <label for="signin-username">Usuario o correo eletronico</label>
+                                    <input type="text" name="username" class="form-control" id="signin-username">
                                 </div>
                                 <div class="form-group">
-                                    <label for="pwd">Contrasena</label>
-                                    <input type="text" class="form-control" id="password">
+                                    <label for="signin-password">Contrasena</label>
+                                    <input type="password" name="password" class="form-control" id="signin-password">
                                 </div>
                                 <button type="submit" class="btn btn-default">Enter</button>
 
@@ -50,7 +53,7 @@
                                 <div class="signup_social_btn">
                                     <ul class="list-inline list-unstyled">
                                         <li><a href="#"><i class="fa fa-facebook"></i> Seguir con Facebook</a></li>
-                                        <li><a href="#"><img src="img/google_icon.png"> Seguir con Google</a></li>
+                                        <li><a href="/auth/google"><img src="img/google_icon.png"> Seguir con Google</a></li>
                                     </ul>
                                 </div>
 
