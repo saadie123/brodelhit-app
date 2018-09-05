@@ -35,6 +35,10 @@ server.use(passport.initialize());
 server.use(passport.session());
 
 passportConfig(passport);
+server.use((req, res, next) => {
+  res.locals.user = req.user || null;
+  next();
+});
 server.use(mainRoutes);
 server.use(authRoutes);
 

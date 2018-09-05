@@ -18,8 +18,13 @@
                     </form>
                 </div>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Acceder</a></li>
-                    <li><a href="#" data-toggle="modal" data-target="#login_register">Empieza a vender</a></li>
+                    {{#if user}}
+                    <li><a href="/logout">Logout</a></li>
+                    <li><a href="/upload-product">Empieza a vender</a></li>
+                    {{else}}
+                    <li><a href="#" data-toggle="modal" data-target="#login_register" id="acceder">Acceder</a></li>
+                    <li><a href="#" data-toggle="modal" data-target="#login_register" id="upload-product">Empieza a vender</a></li>
+                    {{/if}}
                 </ul>
             </div>
         </div>

@@ -1,10 +1,17 @@
 $(document).ready(function() {
+  var redirect = "/";
   $("#register-errors")
     .parent()
     .css({ display: "none" });
   $("#signin-errors")
     .parent()
     .css({ display: "none" });
+  $("#upload-product").click(function() {
+    redirect = "/upload-product";
+  });
+  $("#acceder").click(function() {
+    redirect = "/";
+  });
   $("#signup-form").submit(function(event) {
     event.preventDefault();
     var username = $("#signup-username").val();
@@ -49,7 +56,7 @@ $(document).ready(function() {
       },
       success: function(response) {
         if (response.success === true) {
-          location.href = "/";
+          location.href = redirect;
         }
       },
       error: function(response) {
@@ -58,7 +65,6 @@ $(document).ready(function() {
           .parent()
           .css({ display: "block" });
         var errors = response.responseJSON.error;
-        console.log(errors);
         for (var i = 0; i < errors.length; i++) {
           $("#signin-errors").append("<li>" + errors[i] + "</li>");
         }

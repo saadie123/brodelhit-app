@@ -68,8 +68,15 @@ router.get(
   "/auth/google/callback",
   passport.authenticate("google", {
     failureRedirect: "/",
-    successRedirect: "/"
+    successRedirect: "/upload-product"
   })
 );
-
+router.get("/auth/facebook", passport.authenticate("facebook"));
+router.get(
+  "/auth/facebook/callback",
+  passport.authenticate("facebook", {
+    failureRedirect: "/",
+    successRedirect: "/upload-product"
+  })
+);
 module.exports = router;

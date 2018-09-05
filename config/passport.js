@@ -1,4 +1,5 @@
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const FacebookStrategy = require("passport-facebook").Strategy;
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
@@ -54,6 +55,36 @@ module.exports = passport => {
             username,
             email,
             provider: "google"
+          });
+          const savedUser = await user.save();
+          return cb(null, savedUser);
+        } catch (error) {
+          return cb(error, false);
+        }
+      }
+    )
+  );
+
+  passport.use(
+    new FacebookStrategy(
+      {
+        clientID: config.facebookAppID,
+        clientSecret: config.facebookAppSecret,
+        callbackURL: "/auth/facebook/callback",
+        profileFields: ["id", "displayName", "email"]
+      },
+      async function(accessToken, refreshToken, profile, cb) {
+        const username = profile.emails[0].value;
+        const email = profile.emails[0].value;
+        try {
+          const oldUser = await User.findOne({ email });
+          if (oldUser) {
+            return cb(null, oldUser);
+          }
+          const user = new User({
+            username,
+            email,
+            provider: "facebook"
           });
           const savedUser = await user.save();
           return cb(null, savedUser);
