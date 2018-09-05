@@ -6,6 +6,7 @@ const session = require("express-session");
 const passport = require("passport");
 const mongoose = require("mongoose");
 const config = require("./config/config");
+const passportConfig = require("./config/passport");
 
 const mainRoutes = require("./routes/main");
 const authRoutes = require("./routes/auth");
@@ -21,7 +22,17 @@ server.set("view engine", "handlebars");
 server.use(express.static(path.resolve(__dirname, "public")));
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
+server.use(
+  session({
+    resave: true,
+    saveUninitialized: true,
+    secret: config.secret
+  })
+);
+server.use(passport.initialize());
+server.use(passport.session());
 
+passportConfig(passport);
 server.use(mainRoutes);
 server.use(authRoutes);
 
