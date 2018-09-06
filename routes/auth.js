@@ -5,7 +5,9 @@ const User = require("../models/User");
 const registerValidator = require("../validation/register");
 
 router.get("/register-complete", (req, res) => {
-  res.render("register-complete");
+  res.render("register-complete", {
+    message: "Registro de cuenta exitoso. Ahora puede iniciar sesión"
+  });
 });
 
 router.get("/signin-success", (req, res) => {
@@ -27,7 +29,7 @@ router.post(
   passport.authenticate("local", {
     successRedirect: "/signin-success",
     failureRedirect: "/signin-fail",
-    failureFlash: "Username or password is incorrect"
+    failureFlash: "Nombre de usuario o contraseña incorrecta"
   })
 );
 
@@ -36,12 +38,12 @@ router.post("/signup", async (req, res) => {
     let { errors, isValid } = registerValidator(req.body);
     const oldUsername = await User.findOne({ username: req.body.username });
     if (oldUsername) {
-      errors.push("Username is already taken");
+      errors.push("Este nombre de usuario ya está tomado");
       isValid = false;
     }
     const olduserEmail = await User.findOne({ email: req.body.email });
     if (olduserEmail) {
-      errors.push("Email is already in use");
+      errors.push("Correo electrónico ya está en uso");
       isValid = false;
     }
     if (!isValid) {

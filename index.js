@@ -6,11 +6,13 @@ const session = require("express-session");
 const passport = require("passport");
 const flash = require("express-flash");
 const mongoose = require("mongoose");
+const fileUpload = require("express-fileupload");
 const config = require("./config/config");
 const passportConfig = require("./config/passport");
 
 const mainRoutes = require("./routes/main");
 const authRoutes = require("./routes/auth");
+const productRoutes = require("./routes/products");
 
 mongoose.connect(
   config.mongodbUri,
@@ -24,6 +26,7 @@ server.use(express.static(path.resolve(__dirname, "public")));
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(flash());
+server.use(fileUpload());
 server.use(
   session({
     resave: true,
@@ -41,6 +44,7 @@ server.use((req, res, next) => {
 });
 server.use(mainRoutes);
 server.use(authRoutes);
+server.use(productRoutes);
 
 const port = process.env.PORT || 3000;
 server.listen(port, () => console.log(`app running on port ${port}`));

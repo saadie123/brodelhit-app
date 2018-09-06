@@ -871,6 +871,90 @@ header .nav-tabs
 	float: left;
 	width: 90%
 }
+.profile_page_block h4
+{
+	text-align: left;
+	color: #373737;
+	font-weight: 600;
+}
+.profile_page_block ul
+{
+	margin-top: 30px;
+}
+.profile_page_form
+{
+	float: left;
+	width: 100%;
+	padding: 5% 0%;
+}
+.profile_page_form form .form-group
+{
+	margin-bottom: 30px;
+}
+.profile_page_form form label
+{
+	font-weight: 400;
+	font-size: 24px;
+	float: left;
+	width: 100%;
+}
+.profile_page_form form input
+{
+	border-radius: 0px;
+}
+.profile_page_form form textarea
+{
+	border-radius: 0px;
+}
+.calander_feild
+{
+	position: relative;
+}
+.calander_feild i
+{
+	position: absolute;
+	top: 50px;
+	right: 15px;
+}
+.selection_btn button
+{
+	border:2px solid #ccc;
+	border-radius: 0px;
+	background: none;
+	padding: 15px 60px;
+	margin-right: 30px;
+	margin-bottom: 20px;
+	font-size: 20px;
+}
+.selection_btn button i
+{
+	margin-right: 20px;
+}
+.selection_btn button:hover, focus
+{
+	border-color: #38ffa6;
+}
+.selection_btn button:hover, focus i
+{
+	color: #38ffa6;
+}
+.fom_btn
+{
+	float: left;
+	width: 100%;
+	text-align: center;
+}
+.fom_btn button
+{
+	background: #3afea6;
+	border-color: #29e18f;
+	border-radius: 10px;
+	color: #fff;
+	padding: 15px 0;
+	width: 300px;
+	font-size: 20px;
+	font-weight: bold
+}
 /*=============================================================*/
 
 @media (max-width: 1024px) {
@@ -1054,7 +1138,13 @@ header .nav-tabs
 	{
 		width: auto;
 	}
-
+	.selection_btn button
+	{
+		width: 46%;
+		padding-right: 0px;
+		padding-left: 0px;
+		margin-right: 2%;
+	}
 }
 
 @media (max-width: 668px) {
@@ -1178,6 +1268,11 @@ header .nav-tabs
 	{
 		float: left;
 		width: 100%
+	}
+	.selection_btn button
+	{
+		width: 100%;
+		margin-right: 0px;
 	}
 }
 

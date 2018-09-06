@@ -1,0 +1,59 @@
+<div class="inner_page_content">
+    <div class="container">
+        <div class="row">
+            <div class="drag_img" style="cursor:pointer" id="image-upload">
+                <div class="col-lg-12">
+                    <img src="img/drag_image.png" class="img-responsive" id="product-img-prev">
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="profile_page_form">
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        <input type="file" style="visibility:hidden" name="productImg" id="product-img" accept="image/*">
+                        <div class="form-group">
+                            <label for="title">Titulo</label>
+                            <input type="text" name="title" class="form-control" id="title">
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Categoría</label>
+                            <select class="form-control" id="category" name="category">
+                                <option value="">Seleccione una categoría</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="details">Detalles</label>
+                            <textarea class="form-control" name="details" rows="5" id="details"></textarea>
+                        </div>
+                        <div class="form-group calander_feild">
+                            <label for="email">Fecha Maxima para participar</label>
+                            <input class="form-control" id="date" name="date" placeholder="MM/DD/YYY" type="text" />
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <div class="form-group selection_btn">
+                            <label>Enlace</label>
+                            <button type="button" class="selected" id="show-link"><i class="fa fa-link"></i> Anadir enlace</button>
+                            <button type="button" id="hide-link"><i class="fa fa-times"></i> Ocultar enlace</button>
+                            <input type="text" class="form-control" name="link" id="product-link">
+                        </div>
+
+                        <div class="form-group selection_btn">
+                            <label>Pueden participar</label>
+                            <button class="selected" type="button" id="hide-location"><i class="fa fa-globe"></i> Todo el
+                                mundo
+                            </button>
+                            <button type="button" id="show-location"><i class="fa fa-map-marker"></i> Especificar ubicacion</button>
+                            <input type="text" class="form-control" name="location" id="product-location">
+                        </div>
+                        <div class="form-group fom_btn">
+                            <button type="submit" class="btn btn-default">Publicar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>

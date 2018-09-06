@@ -4,16 +4,18 @@ module.exports = body => {
   let errors = [];
   let isValid = true;
   if (validator.isEmpty(body.username)) {
-    errors.push("Username is required");
+    errors.push("Se requiere nombre de usuario");
   }
   if (validator.isEmpty(body.email)) {
-    errors.push("Email is required");
+    errors.push("Correo electronico es requerido");
   }
   if (!validator.isEmail(body.email)) {
-    errors.push("Please enter a valid email");
+    errors.push(
+      "Por favor introduzca una dirección de correo electrónico válida"
+    );
   }
   if (validator.isEmpty(body.password)) {
-    errors.push("Password is required");
+    errors.push("Se requiere contraseña");
   }
   if (errors.length > 0) {
     isValid = false;
