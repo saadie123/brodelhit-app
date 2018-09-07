@@ -2,6 +2,7 @@ const router = require("express").Router();
 const path = require("path");
 const fs = require("fs");
 const Product = require("../models/Product");
+const uploadProductValidator = require("../validation/upload-product");
 
 router.get("/upload-product", (req, res) => {
   res.render("upload-product");
@@ -9,6 +10,10 @@ router.get("/upload-product", (req, res) => {
 
 router.post("/upload-product", async (req, res) => {
   try {
+    let { errors, isValid } = uploadProductValidator(req.body, req.files);
+    if (!isValid) {
+      return res.render("upload-product", { form: req.body, errors });
+    }
     const uploadDir = path.resolve(__dirname, "..", "uploads");
     const productimgDir = path.resolve(uploadDir, "product-images");
     if (!fs.existsSync(uploadDir)) {
