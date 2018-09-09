@@ -11,7 +11,7 @@ const Product = require("../models/Product");
 
 router.get("/", async (req, res) => {
   try {
-    return res.send(req.connection.remoteAddress);
+    return res.send(req.headers["x-forwarded-for"]);
     const search = req.query.search;
     const location = req.query.location;
     if (search !== "" && search !== undefined) {
