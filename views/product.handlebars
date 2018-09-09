@@ -1,0 +1,79 @@
+<div class="inner_page_content">
+
+    <div class="container">
+        <div class="row">
+            <div class="prodcut_tile_img">
+                <div class="col-lg-12">
+                    <h1>{{product.title}}</h1>
+                    <img src="{{product.image.imageUrl}}" alt="{{product.image.imageName}}" class="img-responsive">
+                </div>
+            </div>
+
+
+            <div class="user_name_sec">
+                <div class="col-lg-12">
+                    <img src="/img/user-profile-5.jpg">
+                    <h5>{{product.user.username}}</h5>
+                </div>
+            </div>
+
+            <div class="date_sec">
+                <div class="col-lg-12">
+                    <h5>Participa antes del: {{product.date}}</h5>
+                </div>
+            </div>
+
+            <div class="detail_block">
+
+                <div class="dscrp_section">
+                    <div class="col-lg-12">
+                        <h4>Detalles del sorteo</h4>
+                        <p>{{product.details}}
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="dscrp_section">
+                    <div class="col-lg-12">
+                        <h4>Enlace</h4>
+                        <p>
+                            <a href="{{product.link}}" target="_blank">{{product.link}}</a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="dscrp_section">
+                    <div class="col-lg-12">
+                        <h4>Localizacion</h4>
+                        <p>
+                            {{product.location}}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="dscrp_section product_related_box">
+                    <div class="col-lg-12">
+                        <h4>Sorteos que tambien te pueden interesar</h4>
+                    </div>
+
+                    {{#each products}}
+                    <div class="col-md-4">
+                        <div class="product_box">
+                            <img src="{{image.imageUrl}}" alt="{{title}}" height="256px" width="224px">
+                            <br><br>
+                            <h3>{{title}}</h3>
+                            <a href="/product/{{_id}}">Participar</a>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+
+</div>

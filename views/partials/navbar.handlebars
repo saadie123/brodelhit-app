@@ -7,14 +7,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#"><img src="img/logo.png"></a>
+                <a class="navbar-brand" href="/"><img src="/img/logo.png"></a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <div class="search_form">
-                    <form>
-                        <input type="" name="" placeholder="BUSCAR">
-                        <input type="" name="" class="location_field" placeholder="Donde">
-                        <button><i class="fa fa-search"></i></button>
+                    <form action="/">
+                        <input type="text" name="search" placeholder="BUSCAR">
+                        <input type="text" name="location" class="location_field" placeholder="Donde">
+                        <button type="submit"><i class="fa fa-search"></i></button>
                     </form>
                 </div>
                 <ul class="nav navbar-nav navbar-right">
@@ -23,7 +23,8 @@
                     <li><a href="/upload-product">Empieza a vender</a></li>
                     {{else}}
                     <li><a href="#" data-toggle="modal" data-target="#login_register" id="acceder">Acceder</a></li>
-                    <li><a href="#" data-toggle="modal" data-target="#login_register" id="upload-product">Empieza a vender</a></li>
+                    <li><a href="#" data-toggle="modal" data-target="#login_register" id="upload-product">Empieza a
+                            vender</a></li>
                     {{/if}}
                 </ul>
             </div>

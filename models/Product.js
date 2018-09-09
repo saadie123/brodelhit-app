@@ -24,7 +24,7 @@ const productSchema = new mongoose.Schema({
   link: String,
   location: {
     type: String,
-    default: "global"
+    default: "Todo el mundo"
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
