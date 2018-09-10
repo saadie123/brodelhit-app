@@ -32,7 +32,7 @@ router.post("/upload-product", async (req, res) => {
       title: req.body.title,
       category: req.body.category,
       details: req.body.details,
-      date: req.body.date,
+      date: new Date(req.body.date),
       link: req.body.link ? req.body.link : "",
       location: req.body.location ? req.body.location : "Todo el mundo",
       image: {

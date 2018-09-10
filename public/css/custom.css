@@ -2,3 +2,7 @@
   color: #38ffa6;
   border-color: #38ffa6 !important;
 }
+
+.expired {
+  border-color: #ccc !important;
+}

@@ -11,11 +11,15 @@ const Product = require("../models/Product");
 
 router.get("/", async (req, res) => {
   try {
-    return res.send(req.headers["x-forwarded-for"]);
     const search = req.query.search;
     const location = req.query.location;
+    const today = new Date();
     if (search !== "" && search !== undefined) {
-      let query = { title: new RegExp(search, "i"), location: "Todo el mundo" };
+      let query = {
+        title: new RegExp(search, "i"),
+        location: "Todo el mundo",
+        date: { $gte: today }
+      };
       if (location !== "" && location !== undefined) {
         let loc = await geocoder.geocode(location);
         query = {
@@ -24,13 +28,14 @@ router.get("/", async (req, res) => {
             { location: "Todo el mundo" },
             { location: { $regex: loc[0].countryCode, $options: "i" } },
             { location: { $regex: loc[0].city, $options: "i" } }
-          ]
+          ],
+          date: { $gte: today }
         };
       }
       const products = await Product.find(query);
       return res.render("home", { products });
     } else {
-      let query = { location: "Todo el mundo" };
+      let query = { location: "Todo el mundo", date: { $gte: today } };
       if (location !== "" && location !== undefined) {
         let loc = await geocoder.geocode(location);
         query = {
@@ -39,16 +44,18 @@ router.get("/", async (req, res) => {
             { location: "Todo el mundo" },
             { location: { $regex: loc[0].countryCode, $options: "i" } },
             { location: { $regex: loc[0].city, $options: "i" } }
-          ]
+          ],
+          date: { $gte: today }
         };
       }
       const products = await Product.find(query);
       return res.render("home", { products });
     }
-    const ip = req.connection.remoteAddress;
+    const ip = req.headers["x-forwarded-for"];
     const iploc = geoip.lookup(ip);
     let query = {
-      location: "Todo el mundo"
+      location: "Todo el mundo",
+      date: { $gte: today }
     };
     if (iploc) {
       query = {
@@ -57,11 +64,21 @@ router.get("/", async (req, res) => {
           { location: { $regex: iploc.country, $options: "i" } },
           { location: { $regex: iploc.city, $options: "i" } },
           { location: { $regex: iploc.region, $options: "i" } }
-        ]
+        ],
+        date: { $gte: today }
       };
     }
     const products = await Product.find(query);
     res.render("home", { products });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.get("/profile", async (req, res) => {
+  try {
+    const products = await Product.find({ user: req.user.id });
+    res.render("profile", { products });
   } catch (error) {
     console.log(error);
   }

@@ -9,6 +9,8 @@ const mongoose = require("mongoose");
 const fileUpload = require("express-fileupload");
 const config = require("./config/config");
 const passportConfig = require("./config/passport");
+const dateHelper = require("./helpers/date");
+const checkExpireHelper = require("./helpers/checkExpire");
 
 const mainRoutes = require("./routes/main");
 const authRoutes = require("./routes/auth");
@@ -20,7 +22,13 @@ mongoose.connect(
   () => console.log("Db connection successful")
 );
 const server = express();
-server.engine("handlebars", exphbs({ defaultLayout: "main" }));
+server.engine(
+  "handlebars",
+  exphbs({
+    defaultLayout: "main",
+    helpers: { date: dateHelper, checkExpire: checkExpireHelper }
+  })
+);
 server.set("view engine", "handlebars");
 server.use(express.static(path.resolve(__dirname, "public")));
 server.use(bodyParser.json());
