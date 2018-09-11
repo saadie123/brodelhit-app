@@ -3,10 +3,12 @@ const path = require("path");
 const fs = require("fs");
 const geoip = require("geoip-lite");
 const Product = require("../models/Product");
+const Category = require("../models/Category");
 const uploadProductValidator = require("../validation/upload-product");
 
-router.get("/upload-product", (req, res) => {
-  res.render("upload-product");
+router.get("/upload-product", async (req, res) => {
+  const categories = await Category.find();
+  res.render("upload-product", { categories });
 });
 
 router.post("/upload-product", async (req, res) => {
@@ -62,10 +64,12 @@ router.get("/products/image/:id", async (req, res) => {
 
 router.get("/product/:id", async (req, res) => {
   try {
-    const ip = req.connection.remoteAddress;
+    const today = new Date();
+    const ip = req.headers["x-forwarded-for"];
     const iploc = geoip.lookup(ip);
     let query = {
-      location: "Todo el mundo"
+      location: "Todo el mundo",
+      date: { $gte: today }
     };
     if (iploc) {
       query = {
@@ -74,12 +78,15 @@ router.get("/product/:id", async (req, res) => {
           { location: { $regex: iploc.country, $options: "i" } },
           { location: { $regex: iploc.city, $options: "i" } },
           { location: { $regex: iploc.region, $options: "i" } }
-        ]
+        ],
+        date: { $gte: today }
       };
     }
     const id = req.params.id;
     const product = await Product.findById(id).populate("user");
-    const products = await Product.find(query, {}, { count: 3 });
+    const products = await Product.find(query, {}, { count: 3 }).sort({
+      date: "desc"
+    });
     res.render("product", { product, products });
   } catch (error) {
     console.log(error);

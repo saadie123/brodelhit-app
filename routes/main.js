@@ -8,6 +8,7 @@ const geocoder = NodeGeoCoder({
   apiKey: config.googleApiKey
 });
 const Product = require("../models/Product");
+const Category = require("../models/Category");
 
 router.get("/", async (req, res) => {
   try {
@@ -32,8 +33,9 @@ router.get("/", async (req, res) => {
           date: { $gte: today }
         };
       }
-      const products = await Product.find(query);
-      return res.render("home", { products });
+      const products = await Product.find(query).sort({ date: "desc" });
+      const categories = await Category.find();
+      return res.render("home", { products, categories });
     } else {
       let query = { location: "Todo el mundo", date: { $gte: today } };
       if (location !== "" && location !== undefined) {
@@ -48,8 +50,10 @@ router.get("/", async (req, res) => {
           date: { $gte: today }
         };
       }
-      const products = await Product.find(query);
-      return res.render("home", { products });
+      const products = await Product.find(query).sort({ date: "desc" });
+      const categories = await Category.find();
+
+      return res.render("home", { products, categories });
     }
     const ip = req.headers["x-forwarded-for"];
     const iploc = geoip.lookup(ip);
@@ -68,8 +72,10 @@ router.get("/", async (req, res) => {
         date: { $gte: today }
       };
     }
-    const products = await Product.find(query);
-    res.render("home", { products });
+    const products = await Product.find(query).sort({ date: "desc" });
+    const categories = await Category.find();
+
+    res.render("home", { products, categories });
   } catch (error) {
     console.log(error);
   }
@@ -77,7 +83,9 @@ router.get("/", async (req, res) => {
 
 router.get("/profile", async (req, res) => {
   try {
-    const products = await Product.find({ user: req.user.id });
+    const products = await Product.find({ user: req.user.id }).sort({
+      date: "desc"
+    });
     res.render("profile", { products });
   } catch (error) {
     console.log(error);

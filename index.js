@@ -15,6 +15,7 @@ const checkExpireHelper = require("./helpers/checkExpire");
 const mainRoutes = require("./routes/main");
 const authRoutes = require("./routes/auth");
 const productRoutes = require("./routes/products");
+const categoryRoutes = require("./routes/category");
 
 mongoose.connect(
   config.mongodbUri,
@@ -53,6 +54,7 @@ server.use((req, res, next) => {
 server.use(mainRoutes);
 server.use(authRoutes);
 server.use(productRoutes);
+server.use(categoryRoutes);
 
 const port = process.env.PORT || 3000;
 server.listen(port, () => console.log(`app running on port ${port}`));

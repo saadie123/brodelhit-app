@@ -19,8 +19,9 @@
                             <label for="category">Categoría</label>
                             <select class="form-control" id="category" name="category">
                                 <option value="">Seleccione una categoría</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
+                                {{#each categories}}
+                                <option value="{{_id}}">{{name}}</option>
+                                {{/each}}
                             </select>
                         </div>
                         <div class="form-group">
@@ -29,22 +30,26 @@
                         </div>
                         <div class="form-group calander_feild">
                             <label for="email">Fecha Maxima para participar</label>
-                            <input class="form-control" id="date" name="date" value="{{form.date}}" placeholder="MM/DD/YYY" type="text" />
+                            <input class="form-control" id="date" name="date" value="{{form.date}}" placeholder="MM/DD/YYY"
+                                type="text" />
                             <i class="fa fa-calendar"></i>
                         </div>
                         <div class="form-group selection_btn">
                             <label>Enlace</label>
-                            <button type="button" class="selected" id="show-link"><i class="fa fa-link"></i> Anadir enlace</button>
+                            <button type="button" class="selected" id="show-link"><i class="fa fa-link"></i> Anadir
+                                enlace</button>
                             <button type="button" id="hide-link"><i class="fa fa-times"></i> Ocultar enlace</button>
                             <input type="text" class="form-control" name="link" value="{{form.link}}" id="product-link">
                         </div>
 
                         <div class="form-group selection_btn">
                             <label>Pueden participar</label>
-                            <button class="selected" type="button" id="hide-location"><i class="fa fa-globe"></i> Todo el
+                            <button class="selected" type="button" id="hide-location"><i class="fa fa-globe"></i> Todo
+                                el
                                 mundo
                             </button>
-                            <button type="button" id="show-location"><i class="fa fa-map-marker"></i> Especificar ubicacion</button>
+                            <button type="button" id="show-location"><i class="fa fa-map-marker"></i> Especificar
+                                ubicacion</button>
                             <input type="text" class="form-control" name="location" value="{{form.location}}" id="product-location">
                         </div>
                         <div class="form-group fom_btn">
