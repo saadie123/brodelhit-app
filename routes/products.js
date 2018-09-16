@@ -2,6 +2,7 @@ const router = require("express").Router();
 const path = require("path");
 const fs = require("fs");
 const geoip = require("geoip-lite");
+const iplocation = require("iplocation");
 const Product = require("../models/Product");
 const Category = require("../models/Category");
 const User = require("../models/User");
@@ -85,21 +86,39 @@ router.get("/product/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const today = new Date();
-    const ip = req.headers["x-forwarded-for"];
-    const iploc = geoip.lookup(ip);
     let query = {
-      location: "Todo el mundo",
+      location: {
+        city: "global",
+        country: "global",
+        countryCode: "global",
+        address: "global"
+      },
       _id: { $ne: id },
       date: { $gte: today }
     };
+    const ip = req.headers["x-forwarded-for"];
+    const iploc = await iplocation(ip);
     if (iploc) {
       query = {
         _id: { $ne: id },
         $or: [
-          { location: "Todo el mundo" },
-          { location: { $regex: iploc.country, $options: "i" } },
-          { location: { $regex: iploc.city, $options: "i" } },
-          { location: { $regex: iploc.region, $options: "i" } }
+          {
+            location: {
+              city: "global",
+              country: "global",
+              countryCode: "global",
+              address: "global"
+            }
+          },
+          {
+            "location.city": iploc.city
+          },
+          {
+            "location.country": iploc.country_name
+          },
+          {
+            "location.countryCode": iploc.country
+          }
         ],
         date: { $gte: today }
       };
