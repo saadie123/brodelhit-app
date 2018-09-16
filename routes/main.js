@@ -1,10 +1,18 @@
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const geoip = require("geoip-lite");
+const where = require("node-where");
+const iplocation = require("iplocation");
 const geocoder = require("../helpers/geocoder");
 
 const Product = require("../models/Product");
 const Category = require("../models/Category");
+router.get("/get-location", (req, res) => {
+  const ip = req.headers["x-forwarded-for"];
+  where.is(ip, (err, result) => {
+    res.json(result);
+  });
+});
 router.get("/", async (req, res) => {
   try {
     const search = req.query.search;
@@ -105,7 +113,8 @@ router.get("/", async (req, res) => {
       const products = await Product.find(query).sort({ date: "desc" });
       const categories = await Category.find();
       const ip = req.headers["x-forwarded-for"];
-      const iploc = geoip.lookup(ip);
+      const iploc = await iplocation(ip);
+      // const iploc = geoip.lookup(ip);
       return res.json(iploc);
       return res.render("home", { products, categories });
     }
