@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const path = require("path");
 const fs = require("fs");
-const geoip = require("geoip-lite");
 const iplocation = require("iplocation");
 const Product = require("../models/Product");
 const Category = require("../models/Category");
