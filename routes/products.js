@@ -114,6 +114,9 @@ router.get("/product/:id", async (req, res) => {
             "location.city": iploc.city
           },
           {
+            "location.city": iploc.region
+          },
+          {
             "location.country": iploc.country_name
           },
           {
