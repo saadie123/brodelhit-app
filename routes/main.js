@@ -104,12 +104,13 @@ router.get("/", async (req, res) => {
       }
       const products = await Product.find(query).sort({ date: "desc" });
       const categories = await Category.find();
-
+      const ip = req.headers["x-forwarded-for"];
+      const iploc = geoip.lookup(ip);
+      return res.json(iploc);
       return res.render("home", { products, categories });
     }
     const ip = req.headers["x-forwarded-for"];
     const iploc = geoip.lookup(ip);
-    return res.send(iploc);
     let query = {
       location: {
         city: "global",
