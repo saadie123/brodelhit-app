@@ -4,12 +4,6 @@ const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const registerValidator = require("../validation/register");
 
-router.get("/register-complete", (req, res) => {
-  res.render("register-complete", {
-    message: "Registro de cuenta exitoso. Ahora puede iniciar sesión"
-  });
-});
-
 router.get("/signin-success", (req, res) => {
   res.json({ success: true });
 });
@@ -52,11 +46,15 @@ router.post("/signup", async (req, res) => {
     const hash = await bcrypt.hash(req.body.password, 10);
     const user = new User({
       username: req.body.username,
+      name: req.body.name,
       email: req.body.email,
       password: hash
     });
-    await user.save();
-    res.json({ success: true });
+    const savedUser = await user.save();
+    req.login(savedUser, err => {
+      if (err) return res.status(400).json(err);
+      res.json({ success: true });
+    });
   } catch (error) {
     res.status(400).json(error);
   }

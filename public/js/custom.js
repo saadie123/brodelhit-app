@@ -6,6 +6,7 @@ $(document).ready(function() {
   $("#signin-errors")
     .parent()
     .css({ display: "none" });
+  $("#profile-description-form").hide();
   $("#upload-product").click(function() {
     redirect = "/upload-product";
   });
@@ -15,6 +16,7 @@ $(document).ready(function() {
   $("#signup-form").submit(function(event) {
     event.preventDefault();
     var username = $("#signup-username").val();
+    var name = $("#signup-name").val();
     var email = $("#signup-email").val();
     var password = $("#signup-pwd").val();
     $.ajax({
@@ -22,12 +24,13 @@ $(document).ready(function() {
       type: "POST",
       data: {
         username: username,
+        name: name,
         email: email,
         password: password
       },
       success: function(response) {
         if (response.success === true) {
-          location.href = "/register-complete";
+          location.href = redirect;
         }
       },
       error: function(response) {
@@ -101,5 +104,39 @@ $(document).ready(function() {
     $("#product-location").hide();
     $("#hide-location").addClass("selected");
     $("#show-location").removeClass("selected");
+  });
+
+  $("#profile-description-edit").click(function(event) {
+    event.preventDefault();
+    $(".profile-description p").hide();
+    $("#profile-description-form").show();
+  });
+
+  $("#profile-description-cancel").click(function(event) {
+    event.preventDefault();
+    $(".profile-description p").show();
+    $("#profile-description-form").hide();
+  });
+  $("#profile-description-save").click(function(event) {
+    event.preventDefault();
+    var description = $("#profile-description-field").val();
+    $.ajax({
+      url: "/my-area",
+      type: "POST",
+      data: {
+        description: description
+      },
+      success: function(response) {
+        if (response.success === true) {
+          $(".profile-description p").show();
+          $(".profile-description p").html(description);
+          $("#profile-description-form").hide();
+        }
+      }
+    });
+  });
+
+  $("#add-description").click(function() {
+    $("#profile-description-form").show();
   });
 });

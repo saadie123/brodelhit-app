@@ -46,6 +46,7 @@ module.exports = passport => {
       async function(accessToken, refreshToken, profile, cb) {
         const username = profile.emails[0].value;
         const email = profile.emails[0].value;
+        const name = profile.displayName;
         try {
           const oldUser = await User.findOne({ email });
           if (oldUser) {
@@ -53,6 +54,7 @@ module.exports = passport => {
           }
           const user = new User({
             username,
+            name,
             email,
             provider: "google"
           });
@@ -76,6 +78,7 @@ module.exports = passport => {
       async function(accessToken, refreshToken, profile, cb) {
         const username = profile.emails[0].value;
         const email = profile.emails[0].value;
+        const name = profile.displayName;
         try {
           const oldUser = await User.findOne({ email });
           if (oldUser) {
@@ -83,6 +86,7 @@ module.exports = passport => {
           }
           const user = new User({
             username,
+            name,
             email,
             provider: "facebook"
           });

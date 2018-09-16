@@ -6,3 +6,22 @@
 .expired {
   border-color: #ccc !important;
 }
+
+.product_box_link {
+  width: 100% !important;
+  height: 100% !important;
+  border: none !important;
+}
+.profile-description {
+  position: relative;
+}
+.profile-description .btn-success {
+  background-color: #38ffa6 !important;
+  border-color: #38ffa6 !important;
+}
+#profile-description-edit {
+  position: absolute;
+  color: #222;
+  left: 100%;
+  top: 150px;
+}

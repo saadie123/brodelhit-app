@@ -6,6 +6,9 @@ module.exports = body => {
   if (validator.isEmpty(body.username)) {
     errors.push("Se requiere nombre de usuario");
   }
+  if (validator.isEmpty(body.name)) {
+    errors.push("Se requiere el nombre");
+  }
   if (validator.isEmpty(body.email)) {
     errors.push("Correo electronico es requerido");
   }

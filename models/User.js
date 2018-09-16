@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema({
   username: String,
+  name: String,
   email: {
     type: String,
     required: true,
@@ -10,7 +11,14 @@ const userSchema = new mongoose.Schema({
   provider: {
     type: String,
     default: "local"
-  }
+  },
+  participating: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "products"
+    }
+  ],
+  description: String
 });
 
 module.exports = mongoose.model("users", userSchema);

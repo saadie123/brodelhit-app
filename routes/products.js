@@ -4,7 +4,9 @@ const fs = require("fs");
 const geoip = require("geoip-lite");
 const Product = require("../models/Product");
 const Category = require("../models/Category");
+const User = require("../models/User");
 const uploadProductValidator = require("../validation/upload-product");
+const geocoder = require("../helpers/geocoder");
 
 router.get("/upload-product", async (req, res) => {
   const categories = await Category.find();
@@ -30,13 +32,30 @@ router.post("/upload-product", async (req, res) => {
     productImg.mv(`${productimgDir}/${productImgName}`, error => {
       if (error) console.log(error);
     });
+    let location = {
+      city: "global",
+      country: "global",
+      countryCode: "global",
+      address: "global"
+    };
+    if (req.body.location) {
+      let loc = await geocoder.geocode({ address: req.body.location });
+      if (loc) {
+        location = {
+          city: loc[0].city ? loc[0].city : loc[0].extra.neighborhood,
+          country: loc[0].country,
+          countryCode: loc[0].countryCode,
+          address: loc[0].formattedAddress
+        };
+      }
+    }
     const product = new Product({
       title: req.body.title,
       category: req.body.category,
       details: req.body.details,
       date: new Date(req.body.date),
       link: req.body.link ? req.body.link : "",
-      location: req.body.location ? req.body.location : "Todo el mundo",
+      location: location,
       image: {
         imageName: productImgName,
         imagePath: productimgDir + "/" + productImgName
@@ -64,15 +83,18 @@ router.get("/products/image/:id", async (req, res) => {
 
 router.get("/product/:id", async (req, res) => {
   try {
+    const id = req.params.id;
     const today = new Date();
     const ip = req.headers["x-forwarded-for"];
     const iploc = geoip.lookup(ip);
     let query = {
       location: "Todo el mundo",
+      _id: { $ne: id },
       date: { $gte: today }
     };
     if (iploc) {
       query = {
+        _id: { $ne: id },
         $or: [
           { location: "Todo el mundo" },
           { location: { $regex: iploc.country, $options: "i" } },
@@ -82,8 +104,19 @@ router.get("/product/:id", async (req, res) => {
         date: { $gte: today }
       };
     }
-    const id = req.params.id;
     const product = await Product.findById(id).populate("user");
+    if (req.user) {
+      if (new Date(product.date) > new Date()) {
+        if (product.user._id.toString() !== req.user.id.toString()) {
+          let index;
+          index = req.user.participating.indexOf(product._id);
+          if (index < 0) {
+            req.user.participating.push(product._id);
+            await req.user.save();
+          }
+        }
+      }
+    }
     const products = await Product.find(query, {}, { count: 3 }).sort({
       date: "desc"
     });
