@@ -109,7 +109,7 @@ router.get("/", async (req, res) => {
     }
     const ip = req.headers["x-forwarded-for"];
     const iploc = geoip.lookup(ip);
-    res.send(iploc);
+    return res.send(iploc);
     let query = {
       location: {
         city: "global",
