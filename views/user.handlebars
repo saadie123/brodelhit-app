@@ -5,36 +5,16 @@
             <div class="user_name_sec">
                 <div class="col-lg-12">
                     <ul class="list-inline list-unstyled">
-                        <li><a href="#">Edit Profile</a></li>
-                        <li><a href="#"><i class="fa fa-cog"></i></a></li>
+                        <li class="send-msg-btn"><a href="#">Enviar Mensaje</a></li>
                     </ul>
-                    <img src="img/user-profile-5.jpg">
-                    <h5>{{user.username}}</h5>
-                    <h6>{{user.name}}</h6>
-                    {{#if user.description}}
-                    <div class="profile-description">
-                        <a href="#" id="profile-description-edit">
-                            <i class="fa fa-pencil"></i>
-                        </a>
-                        <p>
-                            {{user.description}}
-                        </p>
-                        <div id="profile-description-form">
-                            <textarea id="profile-description-field" class="form-control" cols="30" rows="10">{{user.description}}</textarea>
-                            <br><button class="btn btn-success" id="profile-description-save">Save</button>
-                            <button class="btn btn-danger" id="profile-description-cancel">Cancel</button>
-                        </div>
-                    </div>
-                    {{else}}
+                    <img src="/img/user-profile-5.jpg">
+                    <h5>{{profile.username}}</h5>
+                    <h6>{{profile.name}}</h6>
+                    {{#if profile.description}}
                     <div class="profile-description">
                         <p>
-                            <a href="#" id="add-description" class="btn btn-default">Agregar descripción</a>
+                            {{profile.description}}
                         </p>
-                        <div id="profile-description-form">
-                            <textarea id="profile-description-field" class="form-control" cols="30" rows="10"></textarea>
-                            <br><button class="btn btn-success" id="profile-description-save">Save</button>
-                            <button class="btn btn-danger" id="profile-description-cancel">Cancel</button>
-                        </div>
                     </div>
                     {{/if}}
                 </div>

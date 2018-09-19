@@ -25,3 +25,14 @@
   left: 100%;
   top: 150px;
 }
+.send-msg-btn {
+  border: 2px solid #ccc !important;
+  padding: 5px 15px !important;
+}
+.send-msg-btn:hover {
+  border-color: #38ffa6 !important;
+  background-color: #38ffa6;
+}
+.send-msg-btn:hover a {
+  color: #fff !important;
+}

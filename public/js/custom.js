@@ -121,7 +121,7 @@ $(document).ready(function() {
     event.preventDefault();
     var description = $("#profile-description-field").val();
     $.ajax({
-      url: "/my-area",
+      url: "/profile",
       type: "POST",
       data: {
         description: description

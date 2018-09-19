@@ -1,10 +1,10 @@
 const router = require("express").Router();
-const bcrypt = require("bcrypt");
 const iplocation = require("iplocation");
 const geocoder = require("../helpers/geocoder");
 
 const Product = require("../models/Product");
 const Category = require("../models/Category");
+const User = require("../models/User");
 router.get("/", async (req, res) => {
   try {
     const search = req.query.search;
@@ -140,7 +140,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/my-area", async (req, res) => {
+router.get("/profile", async (req, res) => {
   try {
     const products = await Product.find({ user: req.user.id }).sort({
       date: "desc"
@@ -154,10 +154,24 @@ router.get("/my-area", async (req, res) => {
   }
 });
 
-router.post("/my-area", async (req, res) => {
+router.post("/profile", async (req, res) => {
   req.user.description = req.body.description;
   await req.user.save();
   res.json({ success: true });
+});
+
+router.get("/user/:id", async (req, res) => {
+  const id = req.params.id;
+  const profile = await User.findById(id);
+  const products = await Product.find({ user: profile._id }).sort({
+    date: "desc"
+  });
+  const userProducts = await Product.find({
+    _id: { $in: profile.participating }
+  });
+  if (profile) {
+    res.render("user", { profile, products, userProducts });
+  }
 });
 
 module.exports = router;
